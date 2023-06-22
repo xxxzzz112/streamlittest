@@ -13,7 +13,7 @@ from PIL import Image
 import streamlit as st
 
 import config
-from utils import load_model, infer_uploaded_image, infer_uploaded_video, infer_uploaded_webcam
+from utils import load_model, infer_uploaded_image, infer_uploaded_video, infer_uploaded_webcam, infer_rtsp_stream
 
 # setting page layout
 st.set_page_config(
@@ -73,5 +73,7 @@ elif source_selectbox == config.SOURCES_LIST[1]: # Video
     infer_uploaded_video(confidence, model)
 elif source_selectbox == config.SOURCES_LIST[2]: # Webcam
     infer_uploaded_webcam(confidence, model)
+elif source_selectbox == config.SOURCES_LIST[3]:  # RTSP
+    infer_rtsp_stream(confidence, model, "rtsp://zephyr.rtsp.stream/movie?streamKey=6ce01c880f69d07d101ca9eb4e481a08")  # This should be your function to infer from RTSP stream
 else:
     st.error("Currently only 'Image' and 'Video' source are implemented")

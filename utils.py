@@ -164,3 +164,31 @@ def infer_uploaded_webcam(conf, model):
                 break
     except Exception as e:
         st.error(f"Error loading video: {str(e)}")
+
+
+def infer_rtsp_stream(conf, model, rtsp_url):
+    """
+    Execute inference for RTSP stream.
+    :param conf: Confidence of YOLOv8 model
+    :param model: An instance of the `YOLOv8` class containing the YOLOv8 model.
+    :param rtsp_url: The URL of the RTSP stream.
+    :return: None
+    """
+    try:
+        flag = st.button(label="Stop running")
+        vid_cap = cv2.VideoCapture(rtsp_url)  # RTSP stream
+        st_frame = st.empty()
+        while not flag:
+            success, image = vid_cap.read()
+            if success:
+                _display_detected_frames(
+                    conf,
+                    model,
+                    st_frame,
+                    image
+                )
+            else:
+                vid_cap.release()
+                break
+    except Exception as e:
+        st.error(f"Error loading video: {str(e)}")
